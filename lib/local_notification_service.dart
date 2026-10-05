@@ -17,7 +17,7 @@ class LocalNotificationService {
     streamController.add(notificationResponce);
   }
 
-  static void init() async {
+  static Future<void> init() async {
     AndroidInitializationSettings android = AndroidInitializationSettings(
       "@mipmap/ic_launcher",
     );
