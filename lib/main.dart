@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:local_notification/home_page.dart';
 import 'package:local_notification/local_notification_service.dart';
+import 'package:local_notification/work_manager_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  LocalNotificationService.init();
+  await Future.wait([
+    LocalNotificationService.init(),
+    WorkManagerService().init(),
+  ]);
   runApp(const MyApp());
 }
 
