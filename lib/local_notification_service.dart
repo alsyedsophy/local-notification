@@ -132,6 +132,58 @@ class LocalNotificationService {
     );
   }
 
+  //? Scheduled Daily notification
+
+  static Future<void> showScheduledDailyNotification() async {
+    NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        "id 3",
+        "Scheduled Daily Notification",
+        channelDescription: "General Daily Notification",
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
+
+    // initialization Area
+    tz.initializeTimeZones();
+    try {
+      final TimezoneInfo timeZoneName =
+          await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timeZoneName.localizedName!.name));
+    } catch (e) {
+      tz.setLocalLocation(tz.getLocation('Africa/Cairo')); // افتراضي
+    }
+
+    final now = tz.TZDateTime.now(tz.local);
+    final targetHour = 10;
+    final targetMinute = 0;
+
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.hour,
+      now.month,
+      now.day,
+      targetHour,
+      targetMinute,
+    );
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(Duration(days: 1));
+    }
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id: 3,
+      title: "Scheduled Daily",
+      body: "Scheduled Daily Notification",
+      scheduledDate: scheduledDate,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      payload: "Scheduled Daily Notification Payload",
+      matchDateTimeComponents: DateTimeComponents.time,
+      notificationDetails: details,
+    );
+  }
+
   //? Cancle Notification By Id
 
   static void calcleNotification(int id) {

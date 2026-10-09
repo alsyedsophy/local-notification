@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               title: Text("Basic notification"),
               trailing: IconButton(
                 onPressed: () {
-                  LocalNotificationService.calcleNotification(1);
+                  LocalNotificationService.calcleNotification(0);
                 },
                 icon: Icon(Icons.cancel, color: Colors.red),
               ),
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               title: Text("Repeated notification"),
               trailing: IconButton(
                 onPressed: () {
-                  LocalNotificationService.calcleNotification(2);
+                  LocalNotificationService.calcleNotification(1);
                 },
                 icon: Icon(Icons.cancel, color: Colors.red),
               ),
@@ -80,6 +80,20 @@ class _HomePageState extends State<HomePage> {
               },
               leading: Icon(Icons.notifications),
               title: Text("Schduled notification"),
+              trailing: IconButton(
+                onPressed: () {
+                  LocalNotificationService.calcleNotification(2);
+                },
+                icon: Icon(Icons.cancel, color: Colors.red),
+              ),
+            ),
+            SizedBox(height: 40),
+            ListTile(
+              onTap: () {
+                LocalNotificationService.showScheduledDailyNotification();
+              },
+              leading: Icon(Icons.notifications),
+              title: Text("Schduled Daily notification"),
               trailing: IconButton(
                 onPressed: () {
                   LocalNotificationService.calcleNotification(3);
